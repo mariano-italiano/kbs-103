@@ -1,0 +1,256 @@
+kubectl get nodes
+sudo kubeadm token create --print-join-command
+kubectl get nodes
+kubectl get namespaces
+kubectl get ns
+kubectl api-version
+kubectl api-versions
+kubectl api-resources
+kubectl get ns
+kubectl get pods -n kube-system 
+kubectl run test-pod --image nginx
+kubectl get pods -n kube-system 
+kubectl get pods -n default
+kubectl get pods --all-namespaces
+kubectl create ns test
+kubectl run test-pod --image nginx -n test
+kubectl edit pod test-pod 
+kubectl edit pod test-pod -n test
+kubectl get pods -A -l env=test
+kubectl get pods -A --selector env=test
+git clone https://github.com/mariano-italiano/kbs103_Jun.git
+git config --global credential.helper store
+git config --global user.email 'markuj5@gmail.com'
+cd kbs103_Jun/
+ls -la
+mkdir day1
+cd day1
+kubectl get nodes
+sudo vi /etc/apt/sources.list
+sudo vi /etc/apt/sources.list.d/kubernetes.list 
+sudo apt-get update
+sudo apt-mark hold kubeadm
+sudo apt-mark unhold kubeadm && sudo apt-cache madison kubeadm
+apt-get install kubeadm=1.30.2-1.1 -y
+sudo apt-get install kubeadm=1.30.2-1.1 -y
+sudo kubeadm upgrade plan
+sudo kubeadm upgrade apply 
+sudo kubeadm upgrade apply v1.30.2
+kubectl get nodes
+kubectl drain node k8s-master
+kubectl drain k8s-master
+kubectl get pods -n kube-system
+kubectl get pods -n kube-system -o wide
+kubectl get ds -A
+kubectl drain k8s-master --ignore-daemonsets
+kubectl get nodes
+sudo apt-get install kubectl=1.30.2-1.1 kubelet=1.30.2-1.1 -y
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet
+kubectl get nodes
+kubectl uncordon k8s-master
+kubectl get nodes
+etcdctl 
+sudo apt  install etcd-client -y
+vi /etc/kubernetes/manifests/etcd.yaml
+sudo vi /etc/kubernetes/manifests/etcd.yaml
+sudo cat /etc/kubernetes/manifests/etcd.yaml | grep command -A 23
+ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379   --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key endpoint health
+ETCDCTL_API=3 sudo etcdctl --endpoints=https://127.0.0.1:2379   --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key endpoint health
+ETCDCTL_API=3 sudo etcdctl --endpoints=https://127.0.0.1:2379   --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key member list
+sudo -i
+kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl
+kubectl get pods -A
+kubectl exec -it -n kube-system etcd-k8s-master -- sh -c "ETCDCTL_API=3 \
+_CACERT=/etc/kubernetes/pki/etcd/ca.crt \
+_CERT=/etc/kubernetes/pki/etcd/server.crt \
+_KEY=/etc/kubernetes/pki/etcd/server.key \ 
+ endpoint health"
+kubectl exec -it -n kube-system etcd-k8s-master -- sh
+kubectl exec -it -n kube-system etcd-k8s-master -- "ETCDCTL_API=3 \
+_CACERT=/etc/kubernetes/pki/etcd/ca.crt \
+_CERT=/etc/kubernetes/pki/etcd/server.crt \
+_KEY=/etc/kubernetes/pki/etcd/server.key \ 
+ endpoint health"
+kubectl exec -it -n kube-system etcd-k8s-master -- sh
+ETCDCTL_API=3 etcdctl --endpoints 10.2.0.9:2379   --cert=/etc/kubernetes/pki/etcd/server.crt   --key=/etc/kubernetes/pki/etcd/server.key   --cacert=/etc/kubernetes/pki/etcd/ca.crt   member list -w table
+ETCDCTL_API=3 sudo etcdctl --endpoints 10.2.0.9:2379   --cert=/etc/kubernetes/pki/etcd/server.crt   --key=/etc/kubernetes/pki/etcd/server.key   --cacert=/etc/kubernetes/pki/etcd/ca.crt   member list -w table
+sudo -i
+ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379   --cert=/etc/kubernetes/pki/etcd/server.crt   --key=/etc/kubernetes/pki/etcd/server.key   --cacert=/etc/kubernetes/pki/etcd/ca.crt   member list -w table
+ETCDCTL_API=3 sudo etcdctl --endpoints 127.0.0.1:2379   --cert=/etc/kubernetes/pki/etcd/server.crt   --key=/etc/kubernetes/pki/etcd/server.key   --cacert=/etc/kubernetes/pki/etcd/ca.crt   member list -w table
+sudo -i
+kubectl get pods -A
+sudo vi /etc/kubernetes/manifests/etcd.yaml 
+sudo ls -la /var/lib/etcd/
+sudo ls -la /var/lib/etcd/member
+kubectl get pods -o wide -A
+ping 10.0.1.238
+curl -v http://10.0.1.238
+rm -rf /var/lib/etcd
+sudo rm -rf /var/lib/etcd
+sudo crictl ps 
+watch -n1 sudo crictl ps 
+kubectl get pdos
+kubectl get pods
+kubectl get nodes
+watch -n1 sudo crictl ps 
+curl -v http://10.0.1.238
+ping 10.0.1.238
+kubectl get nodes
+kubectl get pods -A
+kubectl get pods -n kube-system
+watch -n1 sudo crictl ps 
+kubectl get pods -n kube-system
+watch -n1 sudo crictl ps 
+ping 10.0.1.238
+kubectl get pods -n kube-system
+watch -n1 sudo crictl ps 
+sudo -i
+watch -n1 sudo crictl ps 
+kubectl get pods -n kube-system
+kubectl get ndoes
+kubectl get no
+vi first-pod.yaml
+kubectl apply -f first-pod.yaml
+kubectl get pod
+kubectl get pod --show-labels
+kubectl run python-test --image marcinkujawski/python-api:1.0 -l app=python 
+kubectl get pods
+kubectl delete pod python-test
+kubectl run python-test --image marcinkujawski/python-api:1.0 -l app=python --dry-run=client -o yaml > python-test.yaml
+vi python-test.yaml 
+kubectl apply -f python-test.yaml
+kubectl get pods
+kubectl get pods -o wide
+kubectl get nodes
+kubectl delete pod python-test
+kubectl apply -f python-test.yaml
+kubectl get pods -o wide
+kubectl describe pod python-test
+kubectl get pods 
+kubectl get pods -o wide
+kubectl get nodes
+kubectl create deploy --image nginx --replicas 5
+kubectl create deploy test-deploy --image nginx --replicas 5
+kubectl get pods -o wide
+kubectl delete deploy test-deploy
+kubectl get pods -o wide
+kubectl get pods -o wide --sort-by .spec.nodeName
+kubectl get pods -o wide --sort-by .spec.containers.name
+kubectl get pods -o wide --sort-by .metadata.name
+kubectl get pods -o wide --sort-by .metadata.name
+kubectl get pods -o wide 
+kubectl get pods -o wide --sort-by .spec.nodeName
+kubectl get pods -o wide --selector kubernetes.io/app
+kubectl get pods -o wide --selector app=python
+kubectl get pods
+kubectl get pods --v=10
+kubectl get pods -o json 
+kubectl get pods --v=7
+kubectl get pods --v=8
+kubectl logs python-test
+kubectl logs ok-pod
+kubectl exec -it ok-pod -- sh
+kubectl exec -it ok-pod -- ls -la
+kubectl exec -it python-test -- curl http://localhost:8080/api
+JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'  && kubectl get nodes -o jsonpath="$JSONPATH" | grep "Ready=True"
+vi ~/.kube/config 
+grep client-cert ~/.kube/config | cut -d " " -f 6
+export client=$(grep client-cert ~/.kube/config | cut -d " " -f 6)
+export key=$(grep client-key-data ~/.kube/config | cut -d " " -f 6)
+export ca=$(grep certificate-authority-data ~/.kube/config | cut -d " " -f 6)
+echo $client | base64 -d - > client.pem
+vi client.pem
+echo $key | base64 -d - > client.key
+echo $ca | base64 -d - > ca.pem
+vi ca.pem
+vi client.key 
+curl --cert client.pem --key client.key --cacert ca.pem https://k8s-master:6443/api/v1/nodes
+kubectl get pods -n default --v=7
+curl --cert client.pem --key client.key --cacert ca.pem https://k8s-master:6443/api/v1/namespaces/default/pods?limit=500
+curl https://k8s-master:6443/api/v1/namespaces/default/pods?limit=500
+curl -k https://k8s-master:6443/api/v1/namespaces/default/pods?limit=500
+curl --cert client.pem --key client.key --cacert ca.pem https://k8s-master:6443/api/v1/namespaces/default/pods?limit=500
+kubectl get ns
+kubectl get all -n test
+sudo useradd -m -s /bin/bash devops
+sudo passwd devops
+openssl genrsa -out devops.key
+openssl req -new -key devops.key  -out devops.csr -subj "/CN=devops"
+ls -la devops.
+ls -la devops.*
+cat devops.csr 
+cat devops.csr | base64 | tr -d '\n'
+vi user-request-devops.yaml
+kubectl apply -f user-request-devops.yaml
+kubectl get csr
+kubectl certificate approve user-request-devops
+kubectl get csr
+kubectl get csr user-request-devops 
+kubectl get csr user-request-devops -o yaml
+kubectl get csr user-request-devops -o jsonpath='{.status.certificate}'
+kubectl get csr user-request-devops -o jsonpath='{.status.certificate}' | base64 -d > devops.crt
+vi devops.crt 
+kubectl --kubeconfig config-devops config set-cluster kbs103-server --insecure-skip-tls-verify=true --server=https://192.168.1.100:6443
+vi config-devops
+kubectl --kubeconfig config-devops config set-credentials devops --client-certificate=devops.crt --client-key=client.key --embed-certs=true
+vi config-devops
+kubectl --kubeconfig config-devops config set-context devops-context --cluster kbs103-server --user devops
+vi config-devops
+kubectl --kubeconfig config-devops config use-context devops-context
+vi config-devops
+sudo cp config-devops /home/devops/
+sudo chown devops:devops /home/devops/config-devops
+ls -la /home/devops/config-devops
+sudo ls -la /home/devops/config-devops
+sudo -i
+rm devops.*
+ls -la devops.*
+openssl genrsa -out devops.pem
+openssl req -new -key devops.pem -out devops.csr -subj "/CN=devops"
+cat devops.csr | base64 | tr -d '\n'
+cat devops.csr | base64 | tr -d '\n' > devops_encoded.csr
+cat devops_encoded.csr
+vi devops_encoded.csr
+vi user-request-devops.yaml 
+kubectl apply -f user-request-devops.yaml
+kubectl get csr
+kubectl certificate approve request-devops
+kubectl get csr
+kubectl delete csr request-devops
+kubectl delete csr user-request-devops
+kubectl apply -f user-request-devops.yaml
+kubectl get csr
+kubectl certificate approve request-devops
+kubectl get csr
+kubectl delete csr request-devops
+vi user-request-devops.yaml 
+kubectl apply -f user-request-devops.yaml
+kubectl certificate approve request-devops
+kubectl get csr
+kubectl get csr request-devops -o jsonpath='{.status.certificate}' | base64 -d > devops-user.crt
+rm config-devops 
+kubectl --kubeconfig ~/.kube/config-devops config set-cluster preprod --insecure-skip-tls-verify=true --server=https://192.168.1.100:6443
+kubectl --kubeconfig ~/.kube/config-devops config set-credentials devops --client-certificate=devops-user.crt --client-key=devops.pem --embed-certs=true
+kubectl --kubeconfig ~/.kube/config-devops config set-context default --cluster=preprod --user=devops
+kubectl --kubeconfig ~/.kube/config-devops config use-context default
+vi ~/.kube/config-devops 
+mv ~/.kube/config-devops .
+vi config-devops 
+sudo cp config-devops /home/devops/.kube/config
+sudo chown devops:devops /home/devops/.kube/config
+sudo ls -la /home/devops/.kube/config
+sudo -i
+kubectl  get ns
+kubectl -n test create role --help
+kubectl -n test create role devops-role --verb=get --verb=list --verb=watch --resource=pods
+kubectl -n test create rolebinding --help
+kubectl -n test create rolebinding devops-rolebinding --role=devops-role --user=devops
+kubectl describe role devops-role
+kubectl describe role devops-role -n test
+kubectl describe rolebinding devops-rolebinding -n test
+kubectl --kubeconfig /home/devops/.kube/config -n test get pods
+sudo -i
+history
+history | awk '$1 > 4' | cut -c 8- ../day1-history.txt
+history | awk '$1 > 4' | cut -c 8- > ../day1-history.txt
