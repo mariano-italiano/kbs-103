@@ -1,0 +1,308 @@
+kubectl create sa my-svc-acc
+kubectl get sa
+kubectl describe sa my-svc-acc 
+kubectl get clusterrole
+kubectl describe clusterrole cluster-admin
+kubectl create clusterrolebinding --help
+kubectl create clusterrolebinding api-clusterrole-binding --clusterrole=cluster-admin --serviceaccount=default:my-svc-acc
+kubectl auth can-i --help
+kubectl auth can-i list pods --as=system:serviceaccount:default:my-svc-acc -n kube-system 
+kubectl auth can-i create deploy --as=system:serviceaccount:default:my-svc-acc -n kube-system 
+kubectl get ns
+kubectl auth can-i create deploy --as=system:serviceaccount:default:my-svc-acc -n default
+kubectl create ns api-test
+kubectl create sa svc-api
+kubectl delete sa svc-api
+kubectl create sa svc-api -n api-test
+kubectl create -n api-test role api-role --verb=create,get --resources=configmaps,secrets 
+kubectl create -n api-test role api-role --verb=create,get --resource=configmaps,secrets 
+kubectl describe role -n api-test api-role 
+kubectl -n api-test create rolebinding api-rolebinding --help
+kubectl -n api-test create rolebinding api-rolebinding --role api-role --serviceaccount=api-test:svc-api
+kubectl auth can-i -n api-test create pod --as=system:serviceaccount:api-test:svc-api
+kubectl auth can-i -n api-test create secret --as=system:serviceaccount:api-test:svc-api
+kubectl get pods
+kubectl exec -it first-pod -- sh
+kubectl exec -it first-pod -- cat /tmp/plik1
+cd kbs103_Jun/; mkdir day2; cd day2; kubectl get pod first-pod -o yaml > first-pod.yaml
+vi first-pod.yaml 
+kubectl delete pod first-pod 
+kubectl apply -f first-pod.yaml 
+kubectl exec -it first-pod -- cat /tmp/plik1
+kubectl get pods
+vi sidecar-pod.yaml
+kubectl apply -f sidecar-pod.yaml
+kubectl get pods
+kubectl exec -it sidecar-pod -- sh
+kubectl exec -it sidecar-pod -c busybox1 -- sh
+kubectl exec -it sidecar-pod -c sidecar -- sh
+kubectl logs sidecar-pod 
+kubectl logs sidecar-pod -c sidecar-pod.yaml 
+kubectl logs sidecar-pod -c sidecar-pod
+kubectl logs sidecar-pod -c sidecar
+kubectl logs sidecar-pod --all-containers 
+kubectl logs sidecar-pod -c busybox1
+vi sidecar-pod.yaml
+vi web-delay.yaml
+vi init-pod.yaml
+kubectl apply -f init-pod.yaml
+vi init-pod.yaml
+kubectl apply -f init-pod.yaml
+watch -n1 kubectl get pods
+kubectl get pods -o wide
+kubectl exec -it init-pod -c prepare
+kubectl exec -it init-pod -c prepare -- sh
+vi init-pod.yaml
+ls -la /etc/kubernetes/manifests/
+cat first-pod.yaml 
+kubectl get pods
+kubectl delete pod my-static-pod-worker01 
+kubectl get pods
+kubectl get pod -A
+kubectl get pod -A -o wide
+kubectl get pod -A
+vi my-replica-set.yaml
+kubectl apply -f my-replica-set.yaml
+kubectl get pod
+kubectl get rs
+kubectl delete pod my-replica-set-x6fcq
+kubectl get rs
+kubectl get pod
+kubectl scale rs my-replica-set --replicas 9
+kubectl get pod
+watch -n1 kubectl get pod
+kubectl get pod
+kubectl scale rs my-replica-set --replicas 1
+kubectl get pod
+kubectl scale rs my-replica-set --replicas 3
+kubectl get pod
+vi my-replica-set.yaml
+kubectl apply -f my-replica-set.yaml
+vi replica-test-pod.yaml
+kubectl delete -f my-replica-set.yaml 
+kubectl get pods
+kubectl apply -f replica-test-pod.yaml 
+kubectl get pods
+kubectl apply -f my-replica-set.yaml 
+kubectl get pods
+kubectl get rs
+kubectl get pod -l app
+kubectl get pod -l app=myapp
+kubectl delete pod myapp-pod-new 
+kubectl get pod -l app=myapp
+vi nginx-deployment.yaml
+kubectl apply -f nginx-deployment.yaml
+kubectl get deploy,rs,pod
+kubectl describe deploy nginx-deployment 
+kubectl scale deployment nginx-deployment --replicas=20
+kubectl get deploy,rs,pod
+kubectl edit deployments.apps nginx-deployment 
+kubectl get pods
+kubectl rollout status deployment nginx-deployment 
+kubectl describe deployments.apps nginx-deployment 
+kubectl set image deployment nginx-deployment nginx=1.16.1
+kubectl rollout status deployment nginx-deployment
+kubectl set image deployment nginx-deployment nginx=1.19.2
+kubectl rollout status deployment nginx-deployment
+kubectl describe deployments.apps nginx-deployment 
+kubectl set image deployment nginx-deployment nginx=nginx:1.19.2
+kubectl rollout status deployment nginx-deployment
+kubectl describe deployments.apps nginx-deployment 
+kubectl rollout history deployment nginx-deployment 
+kubectl rollout undo deployment nginx-deployment --to-revision 1
+kubectl rollout status deployment nginx-deployment
+kubectl describe deployments.apps nginx-deployment 
+kubectl set image deployment nginx-deployment nginx=nginx:1.19.2 --record
+kubectl rollout status deployment nginx-deployment
+kubectl describe deployments.apps nginx-deployment 
+kubectl set image deployment nginx-deployment nginx=nginx:1.16.1
+kubectl rollout status deployment nginx-deployment
+kubectl annotate deployments.apps nginx-deployment kubernetes.io/change-cause="updated nginx version from too high 1.19.2 to latest tested on dev (1.16.1)"
+kubectl describe deployments.apps nginx-deployment 
+kubectl annotate deployments.apps nginx-deployment kubernetes.io/change-ticker="SNOW ticket123"
+kubectl annotate deployments.apps nginx-deployment kubernetes.io/change-implementer="Marcin Kujawski"
+kubectl describe deployments.apps nginx-deployment 
+kubectl rollout history deployment nginx-deployment 
+kubectl rollout restart deployment nginx-deployment 
+kubectl edit deployments.apps nginx-deployment 
+kubectl rollout status deployment nginx-deployment
+kubectl rollout history deployment nginx-deployment 
+kubectl logs -l app=nginx
+kubectl describe node k8s-master
+ls -la
+cp -rp first-pod.yaml nodename-pod.yaml
+vi nodename-pod.yaml
+kubectl get pods
+kubectl get pods -o wide
+kubectl get pods -o wide | grep worker01 | wc -l
+kubectl get pods -o wide | grep worker02 | wc -l
+vi nodename-pod.yaml
+kubectl apply -f nodename-pod.yaml
+kubectl get pods -o wide | grep worker02 | wc -l
+kubectl get pods -o wide
+kubectl get nodes | grep -i labels
+kubectl describe nodes | grep -i labels
+kubectl describe nodes | grep -i labels -A 5
+kubectl label nodes worker02 env=prod
+kubectl describe nodes | grep -i labels -A 5
+kubectl label nodes worker02 env-
+kubectl label nodes worker02 kubernetes.io/env=prod
+kubectl describe nodes | grep -i labels -A 5
+cp -rp nodename-pod.yaml nodeselector-pod.yaml
+vi nodeselector-pod.yaml
+kubectl apply -f nodeselector-pod.yaml
+kubectl get pods -o wide
+vi nodeselector-pod.yaml
+cp -rp nodeselector-pod.yaml nodeselector2-pod.yaml
+vi nodeselector2-pod.yaml
+kubectl apply -f nodeselector2-pod.yaml
+vi nodeselector2-pod.yaml
+kubectl apply -f nodeselector2-pod.yaml
+kubectl get pods -o wide
+kubectl events --sort-by .metadata.creationTimestamp
+kubectl get events --sort-by .metadata.creationTimestamp
+vi nodeselector2-pod.yaml
+kubectl label node worker02 kubernetes.io/app=web
+kubectl get events --sort-by .metadata.creationTimestamp
+kubectl get pods -o wide
+kubectl get pods -o wide | grep worker02 | wc -l
+kubectl get pods -o wide | grep worker01 | wc -l
+kubectl describe nodes worker01
+kubectl describe nodes worker01| grep -i taint
+kubectl describe nodes | grep -i taint
+kubectl describe nodes | grep -i taint -A 3
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[0])"'
+sudo apt  install jq -y
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[0])"'
+cp -rp first-pod.yaml taint-pod.yaml
+vi taint-pod.yaml
+kubectl taint node worker01 kubernetes.io/test=true:NoSchedule
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[0])"'
+kubectl apply -f taint-pod.yaml 
+kubectl get pod -o wide
+kubectl get events --sort-by .metadata.creationTimestamp
+kubectl delete -f taint-pod.yaml 
+vi taint-pod.yaml
+kubectl apply -f taint-pod.yaml
+kubectl get pod -o wide
+kubectl get po --sort-by .spec.nodeName
+kubectl get po --sort-by .spec.nodeName -o wide
+vi taint-pod.yaml 
+kubectl apply -f taint-pod.yaml
+kubectl describe pod taint-pod 
+kubectl taint node worker01 kubernetes.io/badtaint=set:NoExecute 
+kubectl get pod -o wide
+kubectl get po --sort-by .spec.nodeName -o wide
+watch -n1 kubectl get po --sort-by .spec.nodeName -o wide
+kubectl events
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints[0])"'
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints)"'
+kubectl taint node worker02 kubernetes.io/badtaint:NoExecute-
+kubectl taint node worker01 kubernetes.io/badtaint:NoExecute-
+kubectl taint node worker01 kubernetes.io/test:NoSchedule-
+kubectl get nodes -o json | jq -r '.items[] | "Node name: \(.metadata.name), Taints: \(.spec.taints)"'
+vi with-node-affinity.yaml
+kubectl get nodes --show-labels 
+kubectl label node worker01 kubernetes.io/country=poland
+kubectl label node worker02 kubernetes.io/country=france
+kubectl get pods -o wide
+kubectl apply -f with-node-affinity.yaml
+kubectl get pods -o wide
+kubectl delete -f with-node-affinity.yaml
+kubectl label nodes worker02 kubernetes.io/country-
+kubectl apply -f with-node-affinity.yaml
+kubectl get pods -o wide
+kubectl delete -f with-node-affinity.yaml
+kubectl label nodes worker01 kubernetes.io/country-
+kubectl apply -f with-node-affinity.yaml
+kubectl get pods -o wide
+kubectl label node worker01 kubernetes.io/country=poland
+kubectl label node worker02 kubernetes.io/country=france
+kubectl get pods -o wide
+kubectl delete pod with-node-affinity 
+kubectl get nodes --show-labels 
+kubectl apply -f with-node-affinity.yaml
+kubectl get nodes --show-labels 
+kubectl get pods -o wide
+vi with-pod-affinity.yaml
+kubectl describe pod with-node-affinity 
+kubectl edit pod with-node-affinity 
+vi with-pod-affinity.yaml
+vi with-node-affinity.yaml 
+vi with-pod-affinity.yaml
+kubectl get pods -o wide
+kubectl apply -f with-pod-affinity.yaml
+kubectl get pods -o wide
+kubectl delete -f with-pod-affinity.yaml 
+vi with-pod-affinity.yaml
+kubectl apply -f with-pod-affinity.yaml
+kubectl get pods -o wide
+vi clusterip-pod.yaml
+kubectl apply -f clusterip-pod.yaml
+kubectl get pod -o wide
+kubectl scale deployment nginx-deployment --replicas =3
+kubectl scale deployment nginx-deployment --replicas 3
+kubectl get pod -o wide
+kubectl expose pod clusterip-pod --name clusterip-svc --port 80
+kubectl get svc
+kubectl exec -it clusterip-pod -- sh
+kubectl exec -it python-test -- bash
+kubectl get pod -o wide -A
+kubectl get pod -o wide -n test
+kubectl get ns
+kubectl get pod -o wide -n api-test
+kubectl apply -n api-test -f first-pod.yaml 
+kubectl get pod -o wide -n api-test
+kubectl exec -it -n api-test first-pod -- sh
+ls -la
+vi init-pod.yaml 
+cp -rp first-pod.yaml dns-test.yaml
+vi dns-test.yaml
+kubectl apply -n api-test -f dns-test.yaml
+kubectl get pod -o wide -n api-test
+kubectl events
+kubectl events -A
+kubectl get pod -o wide -n api-test
+vi dns-test.yaml
+kubectl replace --force -f dns-test.yaml
+kubectl get pod -o wide -n api-test
+kubectl events -A
+vi dns-test.yaml
+kubectl replace --force -f dns-test.yaml
+kubectl get pods
+kubectl delete test-dns
+kubectl delete pod test-dns
+kubectl -n api-test apply -f dns-test.yaml
+kubectl -n api-test replace --force -f dns-test.yaml
+kubectl delete pod test-dns -n api-test 
+kubectl -n api-test apply -f dns-test.yaml
+kubectl -n api-test get pods
+kubectl exec -it -n api-test test-dns -- sh
+kubectl get svc clusterip-svc -o yaml
+kubectl get svc
+kubectl expose deployment nginx-deployment --name nodeport-svc --port 80
+kubectl get svc
+kubectl delete svc nodeport-svc 
+kubectl expose deployment nginx-deployment --name nodeport-svc --port 80 --type NodePort
+kubectl get svc
+kubectl get deployments.apps 
+kubectl scale deployment nginx-deployment --replicas 1
+kubectl edit pod nginx-deployment-64ff8bfdf8-7whl4 -- bash
+kubectl edit pod nginx-deployment-64ff8bfdf8-7whl4 -- sh
+kubectl exec -it nginx-deployment-64ff8bfdf8-7whl4 -- sh
+kubectl get svc,ep,pod
+kubectl get svc,ep,pod -o wide
+kubectl scale deployment nginx-deployment --replicas 3
+kubectl get svc,ep,pod -o wide
+kubectl expose pod clusterip-pod --name lb-svc --port 80 --type LoadBalancer
+kubectl get svc
+kubectl edit svc lb-svc 
+kubectl get svc
+git status
+ls -la 
+cd ..
+git status
+git add .
+git status
+history
+history | awk '$1 > 281' | cut -c 8- > day2-history.txt

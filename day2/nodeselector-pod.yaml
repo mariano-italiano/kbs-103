@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeselector-pod
+spec:
+  nodeSelector:
+    kubernetes.io/env: prod
+  containers:
+  - image: nginx
+    name: c1
+    ports:
+    - containerPort: 80
+      protocol: TCP

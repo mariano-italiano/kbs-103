@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: clusterip-pod
+  labels:
+    kubernetes.io/svc: clusterip
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+

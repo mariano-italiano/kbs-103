@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: taint-pod
+spec:
+  tolerations:
+  - key: "kubernetes.io/test"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+  - key: "kubernetes.io/badtaint"
+    operator: "Exists"
+    effect: "NoExecute"
+    tolerationSeconds: 120
+  containers:
+  - image: nginx
+    name: c1
+    ports:
+    - containerPort: 80
+      protocol: TCP
