@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Paradise</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #fff8e1;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 2em;
+        }
+        nav ul {
+            list-style: none;
+            background: #ff6f61;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            margin: 0;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            display: block;
+        }
+        nav ul li ul {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background: #ff6f61;
+            padding: 0;
+        }
+        nav ul li ul li {
+            width: 200px;
+        }
+        nav ul li:hover ul {
+            display: block;
+        }
+        nav ul li ul li a {
+            padding: 10px;
+        }
+        main {
+            padding: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #ff6f61;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Welcome to Flower Paradise
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li>
+                <a href="#">Flowers</a>
+                <ul>
+                    <li><a href="#">Roses</a></li>
+                    <li><a href="#">Tulips</a></li>
+                    <li><a href="#">Daisies</a></li>
+                </ul>
+            </li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>Explore the Beauty of Flowers</h1>
+        <p>Discover a wide variety of flowers from roses to tulips, and learn about their unique characteristics. Our garden is blooming with information and inspiration for flower lovers.</p>
+    </main>
+    <footer>
+        &copy; 2024 Flower Paradise. All rights reserved.
+    </footer>
+</body>
+</html>
+

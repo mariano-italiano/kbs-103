@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Enthusiasts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(45deg, #000428, #004e92);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 2em;
+        }
+        nav ul {
+            list-style: none;
+            background: #333;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            margin: 0;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            display: block;
+        }
+        nav ul li ul {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background: #333;
+            padding: 0;
+        }
+        nav ul li ul li {
+            width: 200px;
+        }
+        nav ul li:hover ul {
+            display: block;
+        }
+        nav ul li ul li a {
+            padding: 10px;
+        }
+        main {
+            padding: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #333;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Welcome to Car Enthusiasts
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li>
+                <a href="#">Cars</a>
+                <ul>
+                    <li><a href="#">Sports Cars</a></li>
+                    <li><a href="#">SUVs</a></li>
+                    <li><a href="#">Sedans</a></li>
+                </ul>
+            </li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>Discover the World of Cars</h1>
+        <p>Explore the latest models, reviews, and car news. Whether you're into sports cars, SUVs, or sedans, we have something for every car enthusiast.</p>
+    </main>
+    <footer>
+        &copy; 2024 Car Enthusiasts. All rights reserved.
+    </footer>
+</body>
+</html>
+

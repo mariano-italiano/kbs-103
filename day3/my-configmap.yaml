@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: my-configmap
+data:
+  key1: "value1"
+  key2: "2"
+  key3: |
+    to jest
+    multiline
+    string wpisany
+    w config
+    mape moja w
+    k8s ie
+  config.json: |
+    { 
+    "attr1": "value1",
+    "attr2": "val2"
+    }

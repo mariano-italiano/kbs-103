@@ -1,0 +1,5 @@
+{
+	"schedule": "19:00:00",
+	"path": "/dev/sdb1",
+	"raidType": "RAID5"
+}
