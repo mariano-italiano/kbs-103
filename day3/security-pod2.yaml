@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: security-pod2
+spec:
+  securityContext:
+    # ustawia, że dla dowolnego kontenera w Podzie wszystkie procesy będą uruchamiane z ID usera 1000
+    runAsUser: 1000
+    # ustawia, że dla dowolnego kontenera w Podzie wszystkie procesy będą mieć group ID 3000
+    # any files created will also be owned by user 1000 and group 3000 when runAsGroup is specified
+    runAsGroup: 3000
+    # owner dla wolumenu /data/demo i wszystkich plików srworzonych w tym wolumenie będą mieć group ID 2000
+    fsGroup: 2000
+  volumes:
+  - name: sec-ctx-vol
+    emptyDir: {}
+  containers:
+  - name: sec-ctx-demo
+    image: busybox:1.28
+    command: [ "sh", "-c", "sleep 1h" ]
+    volumeMounts:
+    - name: sec-ctx-vol
+      mountPath: /data/demo
+    securityContext:
+      runAsUser: 5000
+      # kontroluje, czy proces może uzyskać więcej uprawnień niż jego proces macierzysty
+      allowPrivilegeEscalation: false
